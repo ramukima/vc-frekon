@@ -1,0 +1,14 @@
+FROM golang:1.9 as builder
+WORKDIR /go/src/github.com/ramukima/vc-frekon/
+RUN go get -d -v github.com/matryer/way
+RUN go get -d -v github.com/machinebox/sdk-go/facebox
+
+COPY main.go .
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main .
+
+FROM alpine:latest 
+RUN apk --no-cache add ca-certificates
+WORKDIR /root/
+COPY --from=builder /go/src/github.com/ramukima/vc-frekon/app .
+CMD ["./app"]
+
