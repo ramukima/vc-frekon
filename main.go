@@ -25,9 +25,13 @@ func main() {
 	boxutil.WaitForReady(context.Background(), facebox)
 	fmt.Println("Done!")
 
-	fids := ":9000"
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "80"
+	}
+
 	srv := NewServer(facebox)
-	if err := http.ListenAndServe(fids, srv); err != nil {
+	if err := http.ListenAndServe(":"+port, srv); err != nil {
 		log.Fatalln(err)
 	}
 }

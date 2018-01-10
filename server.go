@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"log"
 	"os"
-    	"net"
+	"net"
 	"net/http"
 	"io/ioutil"
 	"time"
@@ -41,7 +41,7 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 func (s *Server) handlewebFaceID(w http.ResponseWriter, r *http.Request) {
 	f, _, err := r.FormFile("file")
 	if err != nil {
-        	log.Printf("Form file parameter not found: %v\n", err)
+		log.Printf("Form file parameter not found: %v\n", err)
 		http.Error(w, "Form file parameter not found", http.StatusInternalServerError)
 		return
 	}
@@ -49,7 +49,7 @@ func (s *Server) handlewebFaceID(w http.ResponseWriter, r *http.Request) {
 	defer f.Close()
 	b, err := ioutil.ReadAll(f)
 	if err != nil {
-        	log.Printf("Failed to read uploaded file:%v\n", err)
+		log.Printf("Failed to read uploaded file:%v\n", err)
 		http.Error(w, "Failed to read uploaded file", http.StatusInternalServerError)
 		return
 	}
@@ -63,8 +63,8 @@ func (s *Server) handlewebFaceID(w http.ResponseWriter, r *http.Request) {
 	var response struct {
 		FaceLen int    `json:"faces_len"`
 		Matched bool   `json:"matched"`
-		Id 		string `json:"id"`
-		Name    	string `json:"name"`
+		Id		string `json:"id"`
+		Name		string `json:"name"`
 		Confidence	float64 `json:"confidence"`
 	}
 	response.FaceLen = len(faces)
