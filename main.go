@@ -8,7 +8,7 @@ import (
 	"os"
 
 	"github.com/machinebox/sdk-go/facebox"
-	"github.com/machinebox/sdk-go/x/boxutil"
+	"github.com/machinebox/sdk-go/boxutil"
 )
 
 func main() {
