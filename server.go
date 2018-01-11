@@ -9,6 +9,7 @@ import (
 	"net"
 	"net/http"
 	"io/ioutil"
+	"strings"
 	"time"
 
 	"github.com/machinebox/sdk-go/facebox"
@@ -87,7 +88,16 @@ func (s *Server) handleSystemStatus(w http.ResponseWriter, r *http.Request) {
 		Status string `json:"status"`
 	}
 
-	response.Status = "System Status: " + b
+	switch b != "" {
+        case strings.Contains(b, "PAUSE"):
+		response.Status = `System Disarmed, Ready to Arm !!`
+        case strings.Contains(b, "ACTIVE"):
+		response.Status = `System Armed !!`
+        default:
+                fmt.Println("Unknown")
+		response.Status = "Status: Unknown"
+        }
+
 
 	w.Header().Set("Content-Type", "application/json")
 	if err := json.NewEncoder(w).Encode(response); err != nil {
